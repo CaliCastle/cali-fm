@@ -9,6 +9,7 @@ import linkListItem, { LinkListItem } from '~/sanity/schema/linkListItem'
 import podcast from '~/sanity/schema/podcast'
 
 export const Episode = z.object({
+  _id: z.string(),
   title: z.string(),
   podcast: z.array(
     z.object({
@@ -22,7 +23,7 @@ export const Episode = z.object({
   explicit: z.boolean().optional(),
   slug: z.string().optional(),
   summary: z.string().optional(),
-  notes: z.string().optional(),
+  notes: z.array(z.any()).optional(),
   tags: z.array(z.string()).optional(),
   linkList: z.array(LinkListItem).optional(),
   coverArt: z.object({

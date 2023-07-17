@@ -1,13 +1,31 @@
 {
   "Languages": {
-    "Placeholder": "选择语言",
+    "placeholder": "选择语言",
     "en": "English",
     "zh-CN": "简体中文"
   },
   "Themes": {
-    "Placeholder": "选择颜色主题",
-    "Light": "浅色",
-    "Dark": "深色",
-    "System": "跟随系统"
+    "placeholder": "选择颜色主题",
+    "light": "浅色",
+    "dark": "深色",
+    "system": "跟随系统"
+  },
+  "Layout": {
+    "about": "介绍",
+    "show_more": "展开",
+    "listen": "收听方式",
+    "homepage": "首页",
+    "hosted_by": "主持人"
+  },
+  "IndexPage": {
+    "episodes": "节目列表",
+    "listen": "播放",
+    "show_notes": "本集介绍",
+    "show_notes_aria_label": "{episode} 的本集介绍",
+    "play_episode": "播放单集 {episode}",
+    "pause_episode": "暂停单集 {episode}"
+  },
+  "EpisodePage": {
+    "other_episodes": "其他节目"
   }
 }

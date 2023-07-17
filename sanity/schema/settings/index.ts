@@ -28,6 +28,7 @@ export const Settings = z.object({
       card: z.enum(['summary', 'summary_large_image']).optional(),
     })
     .optional(),
+  canonical: z.string().optional(),
 })
 export type Settings = z.infer<typeof Settings>
 
@@ -99,7 +100,8 @@ export default defineType({
         defineField({
           name: 'creator',
           title: 'Username',
-          description: 'The username handle of your Twitter account (if any).',
+          description:
+            'The username handle of your Twitter account (include "@").',
           type: 'string',
         }),
         defineField({

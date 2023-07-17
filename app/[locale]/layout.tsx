@@ -1,15 +1,19 @@
 import '~/app/globals.css'
+import 'focus-visible'
 
 import type { Metadata } from 'next'
 import { Manrope } from 'next/font/google'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 
+import { AudioProvider } from '~/app/(audio)/AudioProvider'
+import { PodcastLayout } from '~/app/[locale]/PodcastLayout'
 import { getMessages } from '~/app/getMessages'
 import { i18n } from '~/i18n'
 import { serverFetch } from '~/sanity/client'
 import { urlForImage } from '~/sanity/image'
-import { getSettingsQuery } from '~/sanity/queries'
+import { getPodcastQuery, getSettingsQuery } from '~/sanity/queries'
+import { Podcast } from '~/sanity/schema/podcast'
 import type { Settings } from '~/sanity/schema/settings'
 
 const sansFontEn = Manrope({
@@ -28,6 +32,7 @@ export async function generateMetadata({ params }: { params: RootParams }) {
   const settings = await serverFetch<Settings>(getSettingsQuery())
 
   return {
+    metadataBase: settings.canonical ? new URL(settings.canonical) : undefined,
     title: {
       default: settings.title,
       template: settings.titleTemplate ?? `%s | ${settings.title}`,
@@ -84,15 +89,19 @@ export default async function RootLayout({
     notFound()
   }
 
+  const podcast = await serverFetch<Podcast>(getPodcastQuery())
+
   return (
     <html
       lang={locale}
       suppressHydrationWarning
       className={`font-sans ${sansFontEn.variable}`}
     >
-      <body className="">
+      <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          {children}
+          <AudioProvider>
+            <PodcastLayout podcast={podcast}>{children}</PodcastLayout>
+          </AudioProvider>
         </NextIntlClientProvider>
       </body>
     </html>

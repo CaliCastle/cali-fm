@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
+html, body {
   @apply antialiased;
   text-rendering: optimizeLegibility;
 }

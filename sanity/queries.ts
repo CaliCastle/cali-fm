@@ -6,5 +6,36 @@ export const getSettingsQuery = () =>
 
 export const getPodcastQuery = () =>
   groq`
-  *[_type == "podcast" && _id == *[_type == "settings"][0].podcast._ref][0]
-`
+  *[_type == "podcast" && _id == *[_type == "settings"][0].podcast._ref][0] {
+    ...,
+    "hosts": hosts[]->,
+}`
+
+export const getEpisodesOverviewQuery = () =>
+  groq`
+  *[_type == "episode" && *[_type == "settings"][0].podcast._ref in podcast[]._ref] | order(publishedAt desc) {
+    _id,
+    "slug": slug.current,
+    explicit,
+    publishedAt,
+    title,
+    coverArt,
+    duration,
+    summary,
+    "file": file.asset->url
+}`
+
+export const getEpisodeQuery = () =>
+  groq`
+  *[_type == "episode" && slug.current == $slug][0] {
+    _id,
+    "slug": slug.current,
+    explicit,
+    publishedAt,
+    title,
+    coverArt,
+    duration,
+    summary,
+    "file": file.asset->url,
+    notes,
+}`

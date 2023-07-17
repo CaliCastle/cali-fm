@@ -1,13 +1,31 @@
 {
   "Languages": {
-    "Placeholder": "Select a language",
+    "placeholder": "Select a language",
     "en": "English",
     "zh-CN": "简体中文"
   },
   "Themes": {
-    "Placeholder": "Select a theme",
-    "Light": "Light",
-    "Dark": "Dark",
-    "System": "System"
+    "placeholder": "Select a theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "Layout": {
+    "about": "About",
+    "show_more": "Show more",
+    "listen": "Listen",
+    "homepage": "Homepage",
+    "hosted_by": "Hosted by"
+  },
+  "IndexPage": {
+    "episodes": "Episodes",
+    "listen": "Listen",
+    "show_notes": "Show notes",
+    "show_notes_aria_label": "Show notes for episode {episode}",
+    "play_episode": "Play episode {episode}",
+    "pause_episode": "Pause episode {episode}"
+  },
+  "EpisodePage": {
+    "other_episodes": "Other episodes"
   }
 }
