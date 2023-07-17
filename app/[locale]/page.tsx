@@ -9,4 +9,4 @@ export default async function IndexPage() {
   return <Episodes episodes={episodes} />
 }
 
-export const revalidate = 10
+export const runtime = 'edge'

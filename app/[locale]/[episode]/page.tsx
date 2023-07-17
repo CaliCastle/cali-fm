@@ -17,4 +17,4 @@ export default async function ServerEpisodePage({
   return <EpisodePage episode={data} />
 }
 
-export const revalidate = 10
+export const runtime = 'edge'
