@@ -1,0 +1,13 @@
+{
+  "Languages": {
+    "Placeholder": "选择语言",
+    "en": "English",
+    "zh-CN": "简体中文"
+  },
+  "Themes": {
+    "Placeholder": "选择颜色主题",
+    "Light": "浅色",
+    "Dark": "深色",
+    "System": "跟随系统"
+  }
+}

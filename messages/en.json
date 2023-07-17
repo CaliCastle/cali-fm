@@ -1,0 +1,13 @@
+{
+  "Languages": {
+    "Placeholder": "Select a language",
+    "en": "English",
+    "zh-CN": "简体中文"
+  },
+  "Themes": {
+    "Placeholder": "Select a theme",
+    "Light": "Light",
+    "Dark": "Dark",
+    "System": "System"
+  }
+}
