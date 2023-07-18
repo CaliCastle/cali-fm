@@ -1,30 +1,13 @@
-import { ImageResponse } from 'next/server'
-
-import { serverFetch } from '~/sanity/client'
-import { urlForImage } from '~/sanity/image'
-import { getEpisodeOpenGraphImageQuery } from '~/sanity/queries'
+import { ImageResponse, NextRequest, NextResponse } from 'next/server'
 
 export const runtime = 'edge'
+export const revalidate = 60
 
-export const alt = ''
-export const size = {
-  width: 1200,
-  height: 630,
-}
-export const contentType = 'image/png'
-
-type Data = {
-  coverArt: any
-  podcast: { coverArt: any }[]
-}
-export default async function Image({
-  params,
-}: {
-  params: { locale: string; episode: string }
-}) {
-  const data = await serverFetch<Data>(getEpisodeOpenGraphImageQuery(), {
-    slug: params.episode,
-  })
+export async function GET(req: NextRequest) {
+  const cover = new URL(req.url).searchParams.get('cover')
+  if (!cover) {
+    return NextResponse.error()
+  }
 
   return new ImageResponse(
     (
@@ -2023,12 +2006,10 @@ export default async function Image({
         </svg>
 
         <img
-          src={urlForImage(data.coverArt ?? data.podcast[0].coverArt)
-            .size(550, 550)
-            .url()}
+          src={cover}
           alt=""
-          width={480}
-          height={480}
+          width={450}
+          height={450}
           style={{
             borderRadius: 36,
             boxShadow: '0 0 30px rgba(0,0,0,0.2)',
@@ -2037,7 +2018,8 @@ export default async function Image({
       </div>
     ),
     {
-      ...size,
+      width: 1200,
+      height: 630,
     }
   )
 }

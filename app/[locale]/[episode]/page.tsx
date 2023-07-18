@@ -1,37 +1,37 @@
+import { compile } from 'html-to-text'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { EpisodePage } from '~/app/[locale]/[episode]/EpisodePage'
-import { serverFetch } from '~/sanity/client'
-import { urlForImage } from '~/sanity/image'
-import { getEpisodeQuery } from '~/sanity/queries'
-import type { Episode } from '~/sanity/schema/episode'
+import { getOpenGraphImage } from '~/app/getOpenGraphImage'
+import { getPodcastEpisode } from '~/podcast.config'
 
 export async function generateMetadata({
   params,
 }: {
   params: { episode: string; locale: string }
 }) {
-  const data = await serverFetch<Episode | undefined>(getEpisodeQuery(), {
-    slug: params.episode,
-  })
+  const data = await getPodcastEpisode(params.episode)
   if (!data) {
     return {}
   }
 
+  const description = compile()(data.description)
+
   return {
     title: data.title,
-    description: `${data.title}: ${data.summary}`,
+    description,
     openGraph: {
       title: data.title,
-      description: `${data.title}: ${data.summary}`,
+      description,
       locale: params.locale,
       type: 'website',
+      images: data.coverArt ? [getOpenGraphImage(data.coverArt)] : undefined,
     },
     icons: data.coverArt
       ? {
-          icon: urlForImage(data.coverArt).size(32, 32).url(),
-          apple: urlForImage(data.coverArt).size(180, 180).url(),
+          icon: data.coverArt,
+          apple: data.coverArt,
         }
       : undefined,
   } satisfies Metadata
@@ -42,7 +42,7 @@ export default async function ServerEpisodePage({
 }: {
   params: { episode: string }
 }) {
-  const data = await serverFetch(getEpisodeQuery(), { slug: episode })
+  const data = await getPodcastEpisode(episode)
   if (!data) {
     notFound()
   }
@@ -50,5 +50,4 @@ export default async function ServerEpisodePage({
   return <EpisodePage episode={data} />
 }
 
-export const runtime = 'edge'
 export const revalidate = 10

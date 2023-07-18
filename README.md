@@ -1,24 +1,19 @@
 ## Podcast Studio
 
-This is your one-stop shop for:
-- Creating and hosting your podcast(s)
-- A website for your podcast(s)
+This is a template for a podcast website. It is built with:
+- [Next.js](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
 
 ## Getting Started
 
-First, you'd need a Sanity account. You can sign up for free [here](https://www.sanity.io/signup).
-
-Then, you'd need to create a new project. You can do that [here](https://www.sanity.io/get-started/create-project).
-
-Then, grab your project ID and deploy this repo (fork it to your GitHub first) on [Vercel](https://vercel.com)
-
-Fill in the required environment variables:
+1. First, you'd need a podcast RSS url and the final production domain URL for your website.
 
 ```dotenv
-NEXT_PUBLIC_SANITY_PROJECT_ID="xxx"
-NEXT_PUBLIC_SANITY_DATASET="production"
-NEXT_PUBLIC_SANITY_PROJECT_TITLE="Podcast Studio"
+NEXT_PUBLIC_PODCAST_RSS="yoururl"
+NEXT_PUBLIC_OG_URL="https://example.com"
 ```
+
+2. Open `podcast.config.ts` to configure your podcast.
 
 ## Running Locally
 ```bash

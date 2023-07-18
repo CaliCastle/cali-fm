@@ -1,12 +1,8 @@
 'use client'
 
 import { ComponentProps } from '@zolplay/react'
-import {
-  PauseCircleIcon,
-  PauseIcon,
-  PlayCircleIcon,
-  PlayIcon,
-} from 'lucide-react'
+import { compile } from 'html-to-text'
+import { PauseIcon, PlayIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
@@ -15,8 +11,8 @@ import { useMemo } from 'react'
 import { useAudioPlayer } from '~/app/(audio)/AudioProvider'
 import { Container } from '~/app/[locale]/Container'
 import { FormattedDate } from '~/app/[locale]/FormattedDate'
-import { urlForImage } from '~/sanity/image'
-import type { Episode } from '~/sanity/schema/episode'
+
+const compiler = compile()
 
 function PlayPauseIcon({
   playing,
@@ -30,16 +26,16 @@ function PlayPauseIcon({
 }
 
 function EpisodeRow({ episode }: { episode: Episode }) {
-  const date = new Date(episode.publishedAt)
+  const date = new Date(episode.published)
 
   const audioPlayerData = useMemo(
     () => ({
       title: episode.title,
       audio: {
-        src: episode.file,
-        type: 'audio/mpeg',
+        src: episode.enclosure.url,
+        type: episode.enclosure.type,
       },
-      link: `/${episode.slug}`,
+      link: `/${episode.id}`,
     }),
     [episode]
   )
@@ -48,24 +44,24 @@ function EpisodeRow({ episode }: { episode: Episode }) {
 
   return (
     <article
-      aria-labelledby={`episode-${episode.slug}`}
+      aria-labelledby={`episode-${episode.id}`}
       className="py-10 sm:py-12"
     >
       <Container>
-        <div className="flex w-full items-center">
+        <div className="flex items-center">
           <div className="flex flex-1 flex-col items-start">
             <h2
-              id={`episode-${episode.slug}`}
+              id={`episode-${episode.id}`}
               className="mt-2 text-lg font-bold text-stone-900 dark:text-neutral-100"
             >
-              <Link href={`/${episode.slug}`}>{episode.title}</Link>
+              <Link href={`/${episode.id}`}>{episode.title}</Link>
             </h2>
             <FormattedDate
               date={date}
               className="order-first font-mono text-sm leading-7 text-stone-500 dark:text-neutral-500"
             />
-            <p className="mt-1 line-clamp-2 text-base leading-7 text-stone-500 dark:text-neutral-500">
-              {episode.summary}
+            <p className="mt-1 line-clamp-2 break-all text-base leading-7 text-stone-500 dark:text-neutral-500">
+              {compiler(episode.description)}
             </p>
             <div className="mt-4 flex items-center gap-4">
               <button
@@ -92,7 +88,7 @@ function EpisodeRow({ episode }: { episode: Episode }) {
                 /
               </span>
               <Link
-                href={`/${episode.slug}`}
+                href={`/${episode.id}`}
                 className="flex items-center text-sm font-bold leading-6 text-blue-500 hover:text-blue-700 active:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 dark:active:text-blue-100"
                 aria-label={t('show_notes_aria_label', {
                   episode: episode.title,
@@ -104,14 +100,16 @@ function EpisodeRow({ episode }: { episode: Episode }) {
           </div>
           {episode.coverArt && (
             <Link
-              href={`/${episode.slug}`}
-              className="relative ml-2 aspect-square h-[90px] shrink-0 lg:ml-4 lg:h-[136px]"
+              href={`/${episode.id}`}
+              className="relative ml-2 block shrink-0 lg:ml-4"
             >
               <Image
-                src={urlForImage(episode.coverArt).size(300, 300).url()}
+                src={episode.coverArt}
                 alt={episode.title}
-                className="rounded-lg lg:rounded-xl"
-                fill
+                width={136}
+                height={136}
+                className="h-[90px] w-[90px] rounded-lg lg:h-[136px] lg:w-[136px] lg:rounded-xl"
+                unoptimized
               />
             </Link>
           )}
@@ -131,9 +129,9 @@ export function Episodes({ episodes }: { episodes: Episode[] }) {
           {t('episodes')}
         </h1>
       </Container>
-      <div className="divide-y divide-stone-100 sm:mt-4 lg:mt-8 lg:border-t lg:border-stone-100 dark:lg:border-neutral-800">
+      <div className="divide-y divide-stone-100 dark:divide-neutral-800 sm:mt-4 lg:mt-8 lg:border-t lg:border-stone-100 dark:lg:border-neutral-800">
         {episodes.map((episode) => (
-          <EpisodeRow key={episode._id} episode={episode} />
+          <EpisodeRow key={episode.id} episode={episode} />
         ))}
       </div>
     </div>

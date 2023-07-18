@@ -5,13 +5,14 @@ import { ActivityIcon, Mic2Icon, UserIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
-import React, { Fragment, useId, useMemo, useState } from 'react'
+import React, { Fragment, useEffect, useId, useMemo, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 import { AudioPlayer } from '~/app/(audio)/AudioPlayer'
 import { PodcastDirectoryLink } from '~/app/[locale]/PodcastDirectoryLink'
 import { ThemeSwitcher } from '~/app/[locale]/ThemeSwitcher'
-import { urlForImage } from '~/sanity/image'
-import type { Podcast } from '~/sanity/schema/podcast'
+import { podcastConfig } from '~/podcast.config'
 
 function randomBetween(min: number, max: number, seed = 1) {
   return () => {
@@ -85,7 +86,10 @@ function AboutSection(
   const content = props.children
   const [isExpanded, setIsExpanded] = useState(false)
   const isTooLong = useMemo(() => content.length > 150, [content])
+  const [mounted, setMounted] = useState(false)
   const t = useTranslations('Layout')
+
+  useEffect(() => setMounted(true), [])
 
   return (
     <section {...props}>
@@ -99,7 +103,26 @@ function AboutSection(
           !isExpanded && 'lg:line-clamp-4'
         )}
       >
-        {content}
+        {mounted && (
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={{
+              a: ({ children, href }) => {
+                return (
+                  <Link
+                    href={href ?? ''}
+                    className="font-bold text-zinc-800 hover:underline dark:text-zinc-100"
+                    target="_blank"
+                  >
+                    {children}
+                  </Link>
+                )
+              },
+            }}
+          >
+            {content}
+          </ReactMarkdown>
+        )}
       </p>
       {!isExpanded && isTooLong && (
         <button
@@ -134,21 +157,19 @@ export function PodcastLayout({
           >
             <Image
               className="w-full"
-              src={urlForImage(podcast.coverArt).size(500, 500).url()}
+              src={podcast.coverArt}
               alt=""
               sizes="(min-width: 1024px) 20rem, (min-width: 640px) 16rem, 12rem"
               width={500}
               height={500}
               priority
+              unoptimized
             />
             <div className="absolute inset-0 rounded-lg ring-1 ring-inset ring-black/10 dark:ring-white/10 sm:rounded-xl lg:rounded-2xl" />
           </Link>
           <div className="mt-10 text-center lg:mt-12 lg:text-left">
             <p className="text-xl font-bold text-stone-900 dark:text-neutral-100">
               <Link href="/">{podcast.title}</Link>
-            </p>
-            <p className="mt-3 text-lg font-medium leading-8 text-stone-700 dark:text-neutral-400">
-              {podcast.subtitle}
             </p>
           </div>
           <AboutSection className="mt-12 hidden lg:block">
@@ -162,10 +183,10 @@ export function PodcastLayout({
             <div className="h-px bg-gradient-to-r from-stone-200/0 via-stone-200 to-stone-200/0 dark:from-neutral-700/0 dark:via-neutral-700 dark:to-neutral-700/0 lg:hidden" />
             <ul
               role="list"
-              className="mt-4 flex items-center justify-center gap-10 py-5 text-base font-medium leading-7 text-stone-700 dark:text-neutral-300 sm:gap-8 lg:justify-start lg:gap-4 lg:py-0"
+              className="mt-4 flex items-center justify-center gap-4 py-5 text-base font-medium leading-7 text-stone-700 dark:text-neutral-300 lg:justify-start lg:py-0"
             >
-              {podcast.directories?.map((directory) => (
-                <li key={directory} className="flex">
+              {podcastConfig.directories.map((directory, idx) => (
+                <li key={idx} className="flex">
                   <PodcastDirectoryLink>{directory}</PodcastDirectoryLink>
                 </li>
               ))}
@@ -177,7 +198,7 @@ export function PodcastLayout({
               <span className="ml-2.5">{t('hosted_by')}</span>
             </h2>
             <div className="mt-2 flex gap-6 text-sm font-bold leading-7 text-stone-900">
-              {podcast.hosts?.map((host, hostIndex) => (
+              {podcastConfig.hosts?.map((host, hostIndex) => (
                 <Fragment key={hostIndex}>
                   {hostIndex !== 0 && (
                     <span
@@ -188,19 +209,10 @@ export function PodcastLayout({
                     </span>
                   )}
                   <Link
-                    href={host.url ?? '/'}
+                    href={host.link ?? '/'}
                     target="_blank"
                     className="inline-flex items-center space-x-1.5 text-stone-900 dark:text-neutral-200"
                   >
-                    {host.image && (
-                      <Image
-                        src={urlForImage(host.image).size(40, 40).url()}
-                        alt={host.name}
-                        width={32}
-                        height={32}
-                        className="h-4 w-4 rounded"
-                      />
-                    )}
                     <span>{host.name}</span>
                   </Link>
                 </Fragment>
@@ -221,7 +233,7 @@ export function PodcastLayout({
             <span className="ml-2.5">{t('hosted_by')}</span>
           </h2>
           <div className="mt-2 flex gap-6 text-sm font-bold leading-7 text-stone-900 dark:text-neutral-200">
-            {podcast.hosts?.map((host, hostIndex) => (
+            {podcastConfig.hosts?.map((host, hostIndex) => (
               <Fragment key={hostIndex}>
                 {hostIndex !== 0 && (
                   <span
@@ -232,19 +244,10 @@ export function PodcastLayout({
                   </span>
                 )}
                 <Link
-                  href={host.url ?? '/'}
+                  href={host.link ?? '/'}
                   target="_blank"
                   className="inline-flex items-center space-x-1.5"
                 >
-                  {host.image && (
-                    <Image
-                      src={urlForImage(host.image).size(40, 40).url()}
-                      alt={host.name}
-                      width={32}
-                      height={32}
-                      className="h-4 w-4 rounded"
-                    />
-                  )}
                   <span>{host.name}</span>
                 </Link>
               </Fragment>

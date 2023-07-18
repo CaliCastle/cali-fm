@@ -30,9 +30,13 @@ const directoryMapper: { [key: string]: DirectoryInfo } = {
     icon: StitcherIcon,
     label: 'Stitcher',
   },
-  '(?:pocketcasts.com)': {
+  '(?:pocketcasts.com|pca.st)': {
     icon: PocketCastsIcon,
     label: 'Pocket Casts',
+  },
+  '(?:castro.fm)': {
+    icon: CastroIcon,
+    label: 'Castro',
   },
   '(?:xiaoyuzhoufm.com)': {
     icon: XiaoYuZhouFMIcon,
@@ -266,6 +270,19 @@ function BiliBiliIcon(props: { className?: string }) {
     <Image
       src="/bilibili.webp"
       alt="BiliBili"
+      width={80}
+      height={80}
+      unoptimized
+      className={clsxm('rounded-lg', props.className)}
+    />
+  )
+}
+
+function CastroIcon(props: { className?: string }) {
+  return (
+    <Image
+      src="/castro.webp"
+      alt="Castro"
       width={80}
       height={80}
       unoptimized
