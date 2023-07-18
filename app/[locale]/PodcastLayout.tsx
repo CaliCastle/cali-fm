@@ -198,7 +198,7 @@ export function PodcastLayout({
               <span className="ml-2.5">{t('hosted_by')}</span>
             </h2>
             <div className="mt-2 flex gap-6 text-sm font-bold leading-7 text-stone-900">
-              {podcastConfig.hosts?.map((host, hostIndex) => (
+              {podcastConfig.hosts.map((host, hostIndex) => (
                 <Fragment key={hostIndex}>
                   {hostIndex !== 0 && (
                     <span

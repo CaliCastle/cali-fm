@@ -4,7 +4,7 @@ import { parse } from 'rss-to-json'
 /**
  * TODO: Add your podcast config here
  */
-export const podcastConfig = {
+export const podcastConfig: PodcastConfig = {
   /**
    * Step 1. Add your podcast directories here
    * We support links from:
@@ -16,7 +16,7 @@ export const podcastConfig = {
    * Step 2. Add your podcast hosts here
    */
   hosts: [],
-} satisfies PodcastConfig
+}
 
 export const getPodcast = cache(async () => {
   const feed = await parse(process.env.NEXT_PUBLIC_PODCAST_RSS || '')
