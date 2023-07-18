@@ -10,3 +10,4 @@ export default async function IndexPage() {
 }
 
 export const runtime = 'edge'
+export const revalidate = 10

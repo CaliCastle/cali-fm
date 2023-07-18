@@ -84,7 +84,7 @@ export default async function RootLayout({
 }) {
   let messages
   try {
-    messages = await getMessages({ locale })
+    messages = await getMessages(locale)
   } catch (error) {
     notFound()
   }

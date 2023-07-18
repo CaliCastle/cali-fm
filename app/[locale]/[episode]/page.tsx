@@ -18,3 +18,4 @@ export default async function ServerEpisodePage({
 }
 
 export const runtime = 'edge'
+export const revalidate = 10

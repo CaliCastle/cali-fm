@@ -1,5 +1,3 @@
-export async function getMessages({ locale }: RootParams) {
-  const { default: messages } = await import(`~/messages/${locale}.json`)
-
-  return messages as IntlMessages
+export async function getMessages(locale: string) {
+  return (await import(`../messages/${locale}.json`)).default
 }
