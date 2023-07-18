@@ -27,6 +27,7 @@
     "next-intl": "^2.18.0",
     "next-sanity": "^5.1.2",
     "next-themes": "^0.2.1",
+    "podcast": "^2.0.1",
     "postcss": "8.4.26",
     "postcss-focus-visible": "^9.0.0",
     "react": "18.2.0",

@@ -55,3 +55,23 @@ export const getEpisodeOpenGraphImageQuery = () =>
       coverArt,
     },
 }`
+
+export const getEpisodeFeedQuery = () =>
+  groq`{
+    "podcast": *[_type == "podcast" && _id == *[_type == "settings"][0].podcast._ref][0] {
+      ...,
+      "hosts": hosts[]->,
+    },
+    "episodes": *[_type == "episode" && *[_type == "settings"][0].podcast._ref in podcast[]._ref][0...50] | order(publishedAt desc) {
+      _id,
+      "slug": slug.current,
+      explicit,
+      publishedAt,
+      title,
+      coverArt,
+      duration,
+      summary,
+      "file": file.asset->url,
+      notes,
+    }
+}`
