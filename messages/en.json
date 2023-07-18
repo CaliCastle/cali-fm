@@ -4,12 +4,6 @@
     "en": "English",
     "zh-CN": "简体中文"
   },
-  "Themes": {
-    "placeholder": "Select a theme",
-    "light": "Light",
-    "dark": "Dark",
-    "system": "System"
-  },
   "Layout": {
     "about": "About",
     "show_more": "Show more",

@@ -125,28 +125,5 @@ export default defineType({
       description: 'The "main" version of the URL of your site.',
       type: 'url',
     }),
-    // defineField({
-    //   name: 'navLinks',
-    //   title: 'Navigation Links',
-    //   type: 'array',
-    //   of: [
-    //     {
-    //       type: 'object',
-    //       fields: [
-    //         defineField({
-    //           name: 'text',
-    //           title: 'Text',
-    //           type: 'string',
-    //         }),
-    //         defineField({
-    //           name: 'url',
-    //           title: 'URL',
-    //           type: 'string',
-    //           description: 'This can be a relative or absolute URL.',
-    //         }),
-    //       ],
-    //     },
-    //   ],
-    // }),
   ],
 })

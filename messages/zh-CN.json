@@ -4,12 +4,6 @@
     "en": "English",
     "zh-CN": "简体中文"
   },
-  "Themes": {
-    "placeholder": "选择颜色主题",
-    "light": "浅色",
-    "dark": "深色",
-    "system": "跟随系统"
-  },
   "Layout": {
     "about": "介绍",
     "show_more": "展开",

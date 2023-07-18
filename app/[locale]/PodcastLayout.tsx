@@ -9,8 +9,8 @@ import React, { Fragment, useId, useMemo, useState } from 'react'
 
 import { AudioPlayer } from '~/app/(audio)/AudioPlayer'
 import { PodcastDirectoryLink } from '~/app/[locale]/PodcastDirectoryLink'
+import { ThemeSwitcher } from '~/app/[locale]/ThemeSwitcher'
 import { urlForImage } from '~/sanity/image'
-// import { AudioPlayer } from '@/components/player/AudioPlayer'
 import type { Podcast } from '~/sanity/schema/podcast'
 
 function randomBetween(min: number, max: number, seed = 1) {
@@ -187,7 +187,11 @@ export function PodcastLayout({
                       /
                     </span>
                   )}
-                  <span className="inline-flex items-center space-x-1.5 text-stone-900 dark:text-neutral-200">
+                  <Link
+                    href={host.url ?? '/'}
+                    target="_blank"
+                    className="inline-flex items-center space-x-1.5 text-stone-900 dark:text-neutral-200"
+                  >
                     {host.image && (
                       <Image
                         src={urlForImage(host.image).size(40, 40).url()}
@@ -198,7 +202,7 @@ export function PodcastLayout({
                       />
                     )}
                     <span>{host.name}</span>
-                  </span>
+                  </Link>
                 </Fragment>
               ))}
             </div>
@@ -206,7 +210,7 @@ export function PodcastLayout({
         </div>
       </header>
       <main className="border-t border-stone-200 dark:border-neutral-800 lg:relative lg:mb-28 lg:ml-112 lg:border-t-0 xl:ml-120">
-        <Waveform className="fixed left-0 top-0 h-20 w-full opacity-75" />
+        <Waveform className="fixed left-0 top-0 z-10 h-20 w-full opacity-75" />
         <div className="relative">{children}</div>
       </main>
       <footer className="border-t border-stone-200 bg-stone-50 py-10 pb-40 dark:border-neutral-800 dark:bg-neutral-900 sm:py-16 sm:pb-32 lg:hidden">
@@ -227,7 +231,11 @@ export function PodcastLayout({
                     /
                   </span>
                 )}
-                <span className="inline-flex items-center space-x-1.5">
+                <Link
+                  href={host.url ?? '/'}
+                  target="_blank"
+                  className="inline-flex items-center space-x-1.5"
+                >
                   {host.image && (
                     <Image
                       src={urlForImage(host.image).size(40, 40).url()}
@@ -238,7 +246,7 @@ export function PodcastLayout({
                     />
                   )}
                   <span>{host.name}</span>
-                </span>
+                </Link>
               </Fragment>
             ))}
           </div>
@@ -246,6 +254,9 @@ export function PodcastLayout({
       </footer>
       <div className="fixed inset-x-0 bottom-0 z-10 lg:left-112 xl:left-120">
         <AudioPlayer />
+      </div>
+      <div className="fixed right-4 top-4 z-10">
+        <ThemeSwitcher />
       </div>
     </>
   )

@@ -40,3 +40,18 @@ export const getEpisodeQuery = () =>
     "file": file.asset->url,
     notes,
 }`
+
+export const getPodcastOpenGraphImageQuery = () =>
+  groq`
+  *[_type == "podcast" && _id == *[_type == "settings"][0].podcast._ref][0] {
+    coverArt,
+}`
+
+export const getEpisodeOpenGraphImageQuery = () =>
+  groq`
+  *[_type == "episode" && slug.current == $slug][0] {
+    coverArt,
+    podcast[]-> {
+      coverArt,
+    },
+}`

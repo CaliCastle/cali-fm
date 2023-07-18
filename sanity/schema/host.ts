@@ -10,6 +10,7 @@ export const Host = z.object({
       _ref: z.string(),
     }),
   }),
+  url: z.string().url(),
 })
 export type Host = z.infer<typeof Host>
 
@@ -34,6 +35,13 @@ export default defineType({
     defineField({
       name: 'image',
       type: 'image',
+    }),
+    defineField({
+      name: 'url',
+      title: 'Link',
+      type: 'url',
+      description: 'Link to your host website.',
+      validation: (Rule) => Rule.required(),
     }),
   ],
 })
