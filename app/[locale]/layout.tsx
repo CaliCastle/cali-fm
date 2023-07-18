@@ -58,6 +58,7 @@ export async function generateMetadata({ params }: { params: RootParams }) {
       description: settings.description,
       locale: params.locale,
       type: 'website',
+      url: settings.canonical,
     },
     robots: {
       index: true,
