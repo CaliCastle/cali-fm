@@ -56,22 +56,22 @@ function EpisodeRow({ episode }: { episode: Episode }) {
           <div className="flex flex-1 flex-col items-start">
             <h2
               id={`episode-${episode.slug}`}
-              className="mt-2 text-lg font-bold text-stone-900"
+              className="mt-2 text-lg font-bold text-stone-900 dark:text-neutral-100"
             >
               <Link href={`/${episode.slug}`}>{episode.title}</Link>
             </h2>
             <FormattedDate
               date={date}
-              className="order-first font-mono text-sm leading-7 text-stone-500"
+              className="order-first font-mono text-sm leading-7 text-stone-500 dark:text-neutral-500"
             />
-            <p className="mt-1 line-clamp-2 text-base leading-7 text-stone-500">
+            <p className="mt-1 line-clamp-2 text-base leading-7 text-stone-500 dark:text-neutral-500">
               {episode.summary}
             </p>
             <div className="mt-4 flex items-center gap-4">
               <button
                 type="button"
                 onClick={() => player.toggle()}
-                className="flex items-center text-sm font-bold leading-6 text-pink-500 hover:text-pink-700 active:text-pink-900"
+                className="flex items-center text-sm font-bold leading-6 text-blue-500 hover:text-blue-700 active:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 dark:active:text-blue-100"
                 aria-label={t(
                   player.playing ? 'pause_episode' : 'play_episode',
                   { episode: episode.title }
@@ -87,13 +87,13 @@ function EpisodeRow({ episode }: { episode: Episode }) {
               </button>
               <span
                 aria-hidden="true"
-                className="text-sm font-bold text-stone-400"
+                className="text-sm font-bold text-stone-400 dark:text-neutral-600"
               >
                 /
               </span>
               <Link
                 href={`/${episode.slug}`}
-                className="flex items-center text-sm font-bold leading-6 text-pink-500 hover:text-pink-700 active:text-pink-900"
+                className="flex items-center text-sm font-bold leading-6 text-blue-500 hover:text-blue-700 active:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 dark:active:text-blue-100"
                 aria-label={t('show_notes_aria_label', {
                   episode: episode.title,
                 })}
@@ -127,11 +127,11 @@ export function Episodes({ episodes }: { episodes: Episode[] }) {
   return (
     <div className="pb-12 pt-16 sm:pb-4 lg:pt-12">
       <Container>
-        <h1 className="text-2xl font-bold leading-7 text-stone-900">
+        <h1 className="text-2xl font-bold leading-7 text-stone-900 dark:text-neutral-100">
           {t('episodes')}
         </h1>
       </Container>
-      <div className="divide-y divide-stone-100 sm:mt-4 lg:mt-8 lg:border-t lg:border-stone-100">
+      <div className="divide-y divide-stone-100 sm:mt-4 lg:mt-8 lg:border-t lg:border-stone-100 dark:lg:border-neutral-800">
         {episodes.map((episode) => (
           <EpisodeRow key={episode._id} episode={episode} />
         ))}

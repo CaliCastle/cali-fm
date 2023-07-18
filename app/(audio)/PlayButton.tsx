@@ -2,6 +2,7 @@
 
 import type { ComponentProps } from '@zolplay/react'
 import { clsxm } from '@zolplay/utils'
+import { useTranslations } from 'next-intl'
 
 import { useAudioPlayer } from '~/app/(audio)/AudioProvider'
 
@@ -25,22 +26,22 @@ function PlayIcon(props: ComponentProps) {
   )
 }
 
-type Player = ReturnType<typeof useAudioPlayer>
-
 export function PlayButton({
   player,
   size = 'large',
   className,
 }: {
-  player: Player
+  player: ReturnType<typeof useAudioPlayer>
   size?: 'large' | 'medium' | 'small'
   className?: string
 }) {
+  const t = useTranslations('AudioPlayer')
+
   return (
     <button
       type="button"
       className={clsxm(
-        'group relative flex flex-shrink-0 items-center justify-center rounded-full bg-slate-700 hover:bg-slate-900 focus:outline-none focus:ring-slate-700',
+        'group relative flex flex-shrink-0 items-center justify-center rounded-full bg-neutral-700 outline-none hover:bg-neutral-900 dark:bg-neutral-600 dark:ring-neutral-500 dark:hover:bg-neutral-500 dark:focus:bg-neutral-500 dark:focus:ring-neutral-700',
         {
           large: 'h-18 w-18 focus:ring focus:ring-offset-4',
           medium: 'h-14 w-14 focus:ring-2 focus:ring-offset-2',
@@ -49,7 +50,7 @@ export function PlayButton({
         className
       )}
       onClick={() => player.toggle?.()}
-      aria-label={player.playing ? 'Pause' : 'Play'}
+      aria-label={player.playing ? t('pause') : t('play')}
     >
       <div className="absolute -inset-3 md:hidden" />
       {player.playing ? (

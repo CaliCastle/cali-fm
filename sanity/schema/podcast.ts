@@ -22,6 +22,7 @@ export const Podcast = z.object({
   hosts: z.array(Host).optional(),
   explicit: z.boolean().optional(),
   itunes: iTunes.optional(),
+  directories: z.array(z.string().url()).optional(),
 })
 export type Podcast = z.infer<typeof Podcast>
 
@@ -51,8 +52,6 @@ export default defineType({
       description: 'For when you need to refer to your podcast in a url.',
       options: {
         source: 'title',
-        // slugify: (input: string) =>
-        //   input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
       },
       validation: (Rule) => Rule.required(),
     }),
@@ -102,6 +101,14 @@ export default defineType({
       title: 'iTunes settings',
       type: itunes.name,
       description: 'iTunes has extra configurations',
+    }),
+    defineField({
+      name: 'directories',
+      title: 'Directories',
+      description:
+        'Where is this podcast available? Paste Spotify, Apple Podcasts, etc. links here.',
+      type: 'array',
+      of: [{ type: 'url' }],
     }),
   ],
   preview: {

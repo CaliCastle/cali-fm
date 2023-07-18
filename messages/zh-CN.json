@@ -15,7 +15,7 @@
     "show_more": "展开",
     "listen": "收听方式",
     "homepage": "首页",
-    "hosted_by": "主持人"
+    "hosted_by": "主播"
   },
   "IndexPage": {
     "episodes": "节目列表",
@@ -27,5 +27,15 @@
   },
   "EpisodePage": {
     "other_episodes": "其他节目"
+  },
+  "AudioPlayer": {
+    "current_time": "当前时间",
+    "play": "播放",
+    "pause": "暂停",
+    "rewind": "倒退{s}秒",
+    "fast_forward": "快进{s}秒",
+    "mute": "静音",
+    "unmute": "取消静音",
+    "playback_rate": "播放速度"
   }
 }

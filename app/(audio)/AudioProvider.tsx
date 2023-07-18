@@ -11,10 +11,13 @@ import {
 
 interface Audio {
   src: string
+  type: string
 }
 
 interface AudioData {
   audio: Audio
+  title: string
+  link: string
 }
 
 type Player = {

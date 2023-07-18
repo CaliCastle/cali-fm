@@ -9,6 +9,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { AudioProvider } from '~/app/(audio)/AudioProvider'
 import { PodcastLayout } from '~/app/[locale]/PodcastLayout'
 import { getMessages } from '~/app/getMessages'
+import { ThemeProvider } from '~/app/ThemeProvider'
 import { i18n } from '~/i18n'
 import { serverFetch } from '~/sanity/client'
 import { urlForImage } from '~/sanity/image'
@@ -98,11 +99,18 @@ export default async function RootLayout({
       className={`font-sans ${sansFontEn.variable}`}
     >
       <body>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <AudioProvider>
-            <PodcastLayout podcast={podcast}>{children}</PodcastLayout>
-          </AudioProvider>
-        </NextIntlClientProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <AudioProvider>
+              <PodcastLayout podcast={podcast}>{children}</PodcastLayout>
+            </AudioProvider>
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

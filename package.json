@@ -30,9 +30,11 @@
     "postcss": "8.4.26",
     "postcss-focus-visible": "^9.0.0",
     "react": "18.2.0",
+    "react-aria": "^3.26.0",
     "react-dom": "18.2.0",
     "react-stately": "^3.24.0",
     "sanity": "^3.14.2",
+    "styled-components": "^6.0.4",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6",
     "zod": "^3.21.4"

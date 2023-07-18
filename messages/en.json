@@ -27,5 +27,15 @@
   },
   "EpisodePage": {
     "other_episodes": "Other episodes"
+  },
+  "AudioPlayer": {
+    "current_time": "Current time",
+    "play": "Play",
+    "pause": "Pause",
+    "rewind": "Rewind {s, plural, =1 {1 second} other {# seconds}}",
+    "fast_forward": "Fast forward {s, plural, =1 {1 second} other {# seconds}}",
+    "mute": "Mute",
+    "unmute": "Unmute",
+    "playback_rate": "Playback rate"
   }
 }
