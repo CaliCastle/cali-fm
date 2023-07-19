@@ -16,7 +16,7 @@ export async function generateMetadata({
     return {}
   }
 
-  const description = compile()(data.description)
+  const description = compile()(data.description).split('\n').join(' ')
 
   return {
     title: data.title,
