@@ -190,6 +190,11 @@ export function PodcastLayout({
                   <PodcastDirectoryLink>{directory}</PodcastDirectoryLink>
                 </li>
               ))}
+              <li key="rss" className="flex">
+                <PodcastDirectoryLink isRSS>
+                  {process.env.NEXT_PUBLIC_PODCAST_RSS ?? ''}
+                </PodcastDirectoryLink>
+              </li>
             </ul>
           </section>
           <section className="mt-10 hidden lg:mt-12 lg:block">

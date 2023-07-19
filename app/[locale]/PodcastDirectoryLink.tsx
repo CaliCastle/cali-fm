@@ -1,6 +1,7 @@
 'use client'
 
 import { clsxm } from '@zolplay/utils'
+import { RssIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo } from 'react'
@@ -55,16 +56,22 @@ const directoryMapper: { [key: string]: DirectoryInfo } = {
 export function PodcastDirectoryLink({
   children,
   className,
+  isRSS = false,
 }: {
   children: string
   className?: string
+  isRSS?: boolean
 }) {
   const directory = useMemo(() => {
+    if (isRSS) {
+      return { icon: RSSIcon, label: 'RSS' }
+    }
+
     const directory = Object.entries(directoryMapper).find(([key]) =>
       children.match(key)
     )
     return directory ? directory[1] : null
-  }, [children])
+  }, [children, isRSS])
 
   return (
     <Link
@@ -288,5 +295,13 @@ function CastroIcon(props: { className?: string }) {
       unoptimized
       className={clsxm('rounded-lg', props.className)}
     />
+  )
+}
+
+function RSSIcon(props: { className?: string }) {
+  return (
+    <span className={clsxm('inline-flex p-1', props.className)}>
+      <RssIcon />
+    </span>
   )
 }
