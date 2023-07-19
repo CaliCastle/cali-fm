@@ -62,7 +62,9 @@ export function EpisodePage({ episode }: { episode: Episode }) {
         <hr className="my-12 border-gray-200 dark:border-neutral-800" />
         <div
           className="prose prose-slate mt-14 dark:prose-invert [&>h2:nth-of-type(3n)]:before:bg-violet-200 dark:[&>h2:nth-of-type(3n)]:before:bg-violet-500 [&>h2:nth-of-type(3n+2)]:before:bg-indigo-200 dark:[&>h2:nth-of-type(3n+2)]:before:bg-indigo-500 [&>h2]:mt-12 [&>h2]:flex [&>h2]:items-center [&>h2]:text-sm [&>h2]:font-medium [&>h2]:leading-7 [&>h2]:text-stone-900 [&>h2]:before:mr-3 [&>h2]:before:h-3 [&>h2]:before:w-1.5 [&>h2]:before:rounded-r-full [&>h2]:before:bg-blue-300 dark:[&>h2]:text-neutral-200 dark:[&>h2]:before:bg-blue-400 [&>ul]:mt-6 [&>ul]:list-['\2013\20'] [&>ul]:pl-5"
-          dangerouslySetInnerHTML={{ __html: episode.content }}
+          dangerouslySetInnerHTML={{
+            __html: episode.content ?? episode.description,
+          }}
         />
       </Container>
     </article>

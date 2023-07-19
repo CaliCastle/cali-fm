@@ -1,6 +1,7 @@
 'use client'
 
 import { clsxm } from '@zolplay/utils'
+import { compile } from 'html-to-text'
 import { ActivityIcon, Mic2Icon, UserIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -80,6 +81,7 @@ function Waveform(props: React.SVGProps<SVGSVGElement>) {
   )
 }
 
+const compiler = compile()
 function AboutSection(
   props: React.HTMLProps<HTMLElement> & { children: string }
 ) {
@@ -120,7 +122,7 @@ function AboutSection(
               },
             }}
           >
-            {content}
+            {compiler(content)}
           </ReactMarkdown>
         )}
       </p>
