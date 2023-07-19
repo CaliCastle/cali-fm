@@ -30,7 +30,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: RootParams }) {
   const podcast = await getPodcast()
   const compiler = compile()
-  const description = compiler(podcast.description)
+  const description = compiler(podcast.description).split('\n').join(' ')
 
   return {
     title: {
