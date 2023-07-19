@@ -183,7 +183,7 @@ export function PodcastLayout({
             <div className="h-px bg-gradient-to-r from-stone-200/0 via-stone-200 to-stone-200/0 dark:from-neutral-700/0 dark:via-neutral-700 dark:to-neutral-700/0 lg:hidden" />
             <ul
               role="list"
-              className="mt-4 flex items-center justify-center gap-4 py-5 text-base font-medium leading-7 text-stone-700 dark:text-neutral-300 lg:justify-start lg:py-0"
+              className="mt-4 flex flex-wrap items-center justify-center gap-4 py-5 text-base font-medium leading-7 text-stone-700 dark:text-neutral-300 lg:justify-start lg:py-0"
             >
               {podcastConfig.directories.map((directory, idx) => (
                 <li key={idx} className="flex">
