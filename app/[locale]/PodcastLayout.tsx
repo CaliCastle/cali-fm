@@ -100,6 +100,7 @@ function AboutSection(props: AboutSectionProps) {
   }, [isExpanded, rawContent])
   const [mounted, setMounted] = useState(false)
   const showMore = mounted && content.length > 150 && !isExpanded
+  console.log("🚀 ~ file: PodcastLayout.tsx:103 ~ AboutSection ~ showMore:", showMore)
   const t = useTranslations('Layout')
 
   useEffect(() => setMounted(true), [])
@@ -142,7 +143,7 @@ function AboutSection(props: AboutSectionProps) {
       {showMore && (
         <button
           type="button"
-          className="mt-2 hidden text-sm font-bold leading-6 text-blue-500 hover:text-blue-700 active:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 dark:active:text-blue-100 lg:inline-block"
+          className="mt-2 inline-block text-sm font-bold leading-6 text-blue-500 hover:text-blue-700 active:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 dark:active:text-blue-100"
           onClick={() => setIsExpanded(true)}
         >
           {t('show_more')}
