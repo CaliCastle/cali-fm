@@ -100,7 +100,6 @@ function AboutSection(props: AboutSectionProps) {
   }, [isExpanded, rawContent])
   const [mounted, setMounted] = useState(false)
   const showMore = mounted && content.length > 150 && !isExpanded
-  console.log("🚀 ~ file: PodcastLayout.tsx:103 ~ AboutSection ~ showMore:", showMore)
   const t = useTranslations('Layout')
 
   useEffect(() => setMounted(true), [])
