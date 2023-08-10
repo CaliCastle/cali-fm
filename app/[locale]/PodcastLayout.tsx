@@ -81,14 +81,25 @@ function Waveform(props: React.SVGProps<SVGSVGElement>) {
   )
 }
 
+type AboutSectionProps = Omit<React.HTMLProps<HTMLElement>, 'children'> & {
+  children?: string
+}
+
 const compiler = compile()
-function AboutSection(
-  props: React.HTMLProps<HTMLElement> & { children: string }
-) {
-  const content = props.children
+function AboutSection(props: AboutSectionProps) {
+  const rawContent = props.children ?? ''
   const [isExpanded, setIsExpanded] = useState(false)
-  const isTooLong = useMemo(() => content.length > 150, [content])
+  const content = useMemo(() => {
+    const text = compiler(rawContent)
+    if (isExpanded) {
+      return text
+    }
+
+    const isTooLong = text.length > 150
+    return `${text.substring(0, 150)}${isTooLong ? '...' : ''}`
+  }, [isExpanded, rawContent])
   const [mounted, setMounted] = useState(false)
+  const showMore = mounted && content.length > 150 && !isExpanded
   const t = useTranslations('Layout')
 
   useEffect(() => setMounted(true), [])
@@ -105,7 +116,7 @@ function AboutSection(
           !isExpanded && 'lg:line-clamp-4'
         )}
       >
-        {mounted && (
+        {mounted ? (
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
@@ -122,14 +133,16 @@ function AboutSection(
               },
             }}
           >
-            {compiler(content)}
+            {content}
           </ReactMarkdown>
+        ) : (
+          '...'
         )}
       </p>
-      {!isExpanded && isTooLong && (
+      {showMore && (
         <button
           type="button"
-          className="mt-2 hidden text-sm font-bold leading-6 text-blue-500 hover:text-blue-700 active:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 dark:active:text-blue-100 lg:inline-block"
+          className="mt-2 inline-block text-sm font-bold leading-6 text-blue-500 hover:text-blue-700 active:text-blue-900 dark:text-blue-400 dark:hover:text-blue-200 dark:active:text-blue-100"
           onClick={() => setIsExpanded(true)}
         >
           {t('show_more')}
