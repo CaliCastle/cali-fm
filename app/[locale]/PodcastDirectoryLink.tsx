@@ -7,51 +7,68 @@ import Link from 'next/link'
 import { useMemo } from 'react'
 
 type DirectoryInfo = {
-  icon: React.ComponentType<{ className?: string }>
   label: string
+  domains: readonly string[]
+  icon: React.ComponentType<{ className?: string }>
 }
-const directoryMapper: { [key: string]: DirectoryInfo } = {
-  '(?:spotify.com|open.spotify.com)': {
-    icon: SpotifyIcon,
+
+type SupportedDomains = (typeof directoryMapper)[number]['domains'][number]
+export type SupportedDirectory = `https://${
+  | 'www.'
+  | ''}${SupportedDomains}/${string}`
+
+export const directoryMapper = [
+  {
     label: 'Spotify',
+    domains: ['spotify.com', 'open.spotify.com'],
+    icon: SpotifyIcon,
   },
-  '(?:apple.co|podcasts.apple.com)': {
-    icon: ApplePodcastIcon,
+  {
     label: 'Apple Podcasts',
+    domains: ['apple.co', 'podcasts.apple.com'],
+    icon: ApplePodcastIcon,
   },
-  '(?:google.com|podcasts.google.com)': {
-    icon: GooglePodcastIcon,
+  {
     label: 'Google Podcasts',
+    domains: ['google.com', 'podcasts.google.com'],
+    icon: GooglePodcastIcon,
   },
-  '(?:overcast.fm)': {
-    icon: OvercastIcon,
+  {
     label: 'Overcast',
+    domains: ['overcast.fm'],
+    icon: OvercastIcon,
   },
-  '(?:stitcher.com)': {
-    icon: StitcherIcon,
+  {
     label: 'Stitcher',
+    domains: ['stitcher.com'],
+    icon: StitcherIcon,
   },
-  '(?:pocketcasts.com|pca.st)': {
-    icon: PocketCastsIcon,
+  {
     label: 'Pocket Casts',
+    domains: ['pocketcasts.com', 'pca.st'],
+    icon: PocketCastsIcon,
   },
-  '(?:castro.fm)': {
-    icon: CastroIcon,
+  {
     label: 'Castro',
+    domains: ['castro.fm'],
+    icon: CastroIcon,
   },
-  '(?:xiaoyuzhoufm.com)': {
-    icon: XiaoYuZhouFMIcon,
+  {
     label: '小宇宙',
+    domains: ['xiaoyuzhoufm.com'],
+    icon: XiaoYuZhouFMIcon,
   },
-  '(?:youtube.com|youtu.be)': {
-    icon: YouTubeIcon,
+  {
     label: 'YouTube',
+    domains: ['youtube.com', 'youtu.be'],
+    icon: YouTubeIcon,
   },
-  '(?:bilibili.com|b23.tv)': {
-    icon: BiliBiliIcon,
+  {
     label: '哔哩哔哩',
+    domains: ['bilibili.com', 'b23.tv'],
+    icon: BiliBiliIcon,
   },
-}
+] as const satisfies readonly DirectoryInfo[]
 
 export function PodcastDirectoryLink({
   children,
@@ -67,10 +84,10 @@ export function PodcastDirectoryLink({
       return { icon: RSSIcon, label: 'RSS' }
     }
 
-    const directory = Object.entries(directoryMapper).find(([key]) =>
-      children.match(key)
+    const directory = directoryMapper.find((d) =>
+      children.match(new RegExp(`(?:${d.domains.join('|')})`, 'i'))
     )
-    return directory ? directory[1] : null
+    return directory
   }, [children, isRSS])
 
   return (
