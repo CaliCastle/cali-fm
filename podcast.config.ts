@@ -1,6 +1,13 @@
 import { cache } from 'react'
 import { parse } from 'rss-to-json'
 
+import type { SupportedDirectory } from './app/[locale]/PodcastDirectoryLink'
+
+type PodcastConfig = {
+  directories: SupportedDirectory[]
+  hosts: Host[]
+}
+
 /**
  * TODO: Add your podcast config here
  */
